@@ -836,6 +836,12 @@ namespace DBHelpers
             return ExecuteListAsync<T>(command, converter);
         }
 
+        public Task<List<T>> ExecuteStoreListAsync<T>(string commandText, Converter<DbDataReader, T> converter)
+        {
+            var command = CreateCommand(commandText);
+            return ExecuteListAsync<T>(command, converter);
+        }
+
         public Task<List<T>> ExecuteListAsync<T>(string commandText, int startRecord, int maxRecords)
             where T : new()
         {

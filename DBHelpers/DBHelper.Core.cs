@@ -147,6 +147,75 @@ namespace DBHelpers
             return connection;
         }
 
+        public DbCommand GetSqlStringCommond(string sqlQuery)
+        {
+            DbCommand dbCommand = Factory.CreateCommand();
+            dbCommand.CommandText = sqlQuery;
+            dbCommand.CommandType = CommandType.Text;
+            return dbCommand;
+        }
+
+        public DbCommand GetStoredProcCommond(string storedProcedure)
+        {
+            DbCommand dbCommand = Factory.CreateCommand();
+            dbCommand.CommandText = storedProcedure;
+            dbCommand.CommandType = CommandType.StoredProcedure;
+            return dbCommand;
+        }
+
+        #region Parameters
+        public void AddParameterCollection(DbCommand cmd, DbParameterCollection dbParameterCollection)
+        {
+            foreach (DbParameter dbParameter in dbParameterCollection)
+            {
+                cmd.Parameters.Add(dbParameter);
+            }
+        }
+        public void AddOutParameter(DbCommand cmd, string parameterName, DbType dbType, int size)
+        {
+            DbParameter dbParameter = cmd.CreateParameter();
+            dbParameter.DbType = dbType;
+            dbParameter.ParameterName = parameterName;
+            dbParameter.Size = size;
+            dbParameter.Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(dbParameter);
+        }
+        public void AddInParameter(DbCommand cmd, string parameterName, DbType dbType, object value)
+        {
+            DbParameter dbParameter = cmd.CreateParameter();
+            dbParameter.DbType = dbType;
+            dbParameter.ParameterName = parameterName;
+            dbParameter.Value = value;
+            dbParameter.Direction = ParameterDirection.Input;
+            cmd.Parameters.Add(dbParameter);
+        }
+
+        public void AddInputOutputParameter(DbCommand cmd, string parameterName, DbType dbType, object value)
+        {
+            DbParameter dbParameter = cmd.CreateParameter();
+            dbParameter.DbType = dbType;
+            dbParameter.ParameterName = parameterName;
+            dbParameter.Value = value;
+            dbParameter.Direction = ParameterDirection.InputOutput;
+            cmd.Parameters.Add(dbParameter);
+        }
+
+        public void AddReturnParameter(DbCommand cmd, string parameterName, DbType dbType)
+        {
+            DbParameter dbParameter = cmd.CreateParameter();
+            dbParameter.DbType = dbType;
+            dbParameter.ParameterName = parameterName;
+            dbParameter.Direction = ParameterDirection.ReturnValue;
+            cmd.Parameters.Add(dbParameter);
+        }
+        public DbParameter GetParameter(DbCommand cmd, string parameterName)
+        {
+            return cmd.Parameters[parameterName];
+        }
+
+
+        #endregion
+
         public DbCommand CreateCommand(string commandText, params object[] parameters)
         {
             var len = parameters.Length;
@@ -174,7 +243,7 @@ namespace DBHelpers
 
                         dbParameter.ParameterName = name;
                         dbParameter.Value = parameter ?? DBNull.Value;
-
+                        //dbParameter.Direction = ParameterDirection.Input
                         formatValues[i] = name;
                         command.Parameters.Add(dbParameter);
                     }

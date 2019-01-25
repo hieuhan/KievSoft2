@@ -186,6 +186,16 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBHelpers\DBHelpers.csproj">
+      <Project>{91853C55-BCAB-4C40-A6EC-484A93BEB676}</Project>
+      <Name>DBHelpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KievSoft.CMSLib\KievSoft.CMSLib.csproj">
+      <Project>{A63AA644-762C-4ED9-B6A4-55982DD56FCA}</Project>
+      <Name>KievSoft.CMSLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
